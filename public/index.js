@@ -47,9 +47,9 @@ socket.on('mensajes', (data) => render(data));
 let render = (data) => {
     let html = data.map((e,i)=>`
         <div>
-            <strong>${e.autor}</strong>
-            <span>[${e.date}]: </span>
-            <em>${e.texto}</em>
+            <strong class="bluetext">${e.autor}</strong>
+            <span class="browntext">[${e.date}]: </span>
+            <em class="greentext">${e.texto}</em>
         </div>
     `).join(' ');
     document.getElementById("mensajes").innerHTML = html;
@@ -64,6 +64,7 @@ function enviarMensaje(e){
         date: date,
     }
     document.getElementById('usuario').disabled = true;
+    texto: document.getElementById('texto').value = '';
     socket.emit('nuevo-mensaje', envio);
     return false;
 }

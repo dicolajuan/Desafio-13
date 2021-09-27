@@ -1,9 +1,8 @@
 
-<h2>Chat en línea</h2>
-<div id="mensajes"></div>
-<br>
+
 <form onsubmit="return enviarMensaje(this)" style="margin:20px;">
     <div class="ex">
+        <h2>Chat en línea</h2>
         <div class="input-group mb-3">
             {{!-- <input type="email" id="usuario" placeholder="Ingresar email"> --}}
             <span class="input-group-text" id="basic-addon1">
@@ -32,6 +31,8 @@
               </button>
             {{!-- <input type="submit" value="Enviar"> --}}
         </div>
+        <br>
+        <div id="mensajes"></div>
     </div>
 </form>
 

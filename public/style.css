@@ -23,3 +23,15 @@ form{
   justify-content:center;
   align-items:center;
 }
+
+strong.bluetext{
+  color: blue;
+}
+
+span.browntext{
+  color: brown;
+}
+
+em.greentext{
+  color: green;
+}
