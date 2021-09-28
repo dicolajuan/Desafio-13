@@ -1,3 +1,7 @@
+//import { Archivo } from './Archivo.js';
+
+const Archivo = require('./Archivo.js');
+
 const express = require('express');
 const handlebars = require('express-handlebars');
 const app = express();
@@ -7,7 +11,6 @@ const io = require('socket.io')(http);
 const objProductos = [];
 const objMensajes = [];
 
-const mensajes = [];
 
 app.use(express.static('./public'));
 
@@ -21,13 +24,24 @@ app.engine(
     })
 );
     
-    app.set('views', './views'); // especifica el directorio de vistas
-    app.set('view engine', 'hbs'); // registra el motor de plantillas
-    
+app.set('views', './views'); // especifica el directorio de vistas
+app.set('view engine', 'hbs'); // registra el motor de plantillas
+
+let objFile = new Archivo('./mensajes.txt');
+
+const getAllItems = async (rFile) => {
+    let rfile = await rFile.readFile();
+    return rfile;
+}
+
+const saveMesagge = async (sFile, objMensajes) => {
+    await sFile.saveFile(objMensajes);
+}
 
 http.listen(3030, () => console.log('escuchando desde servidor. Puerto: 3030') )
+//http.close( () => console.log('Server closed!') );
 
-io.on ('connection', (socket) => {
+io.on ('connection', async (socket) => {
     console.log('Usuario conectado');
 
     socket.emit('productCatalog', { products: objProductos});
@@ -41,6 +55,11 @@ io.on ('connection', (socket) => {
     socket.on('nuevo-mensaje', (data)=>{
         objMensajes.push(data);
         io.sockets.emit('mensajes', objMensajes);
+        try{
+            saveMesagge(objFile,objMensajes);
+        } catch {
+            console.log('Error al grabar los mensajes');
+        }
     });
 
 });
